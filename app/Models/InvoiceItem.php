@@ -29,7 +29,7 @@ class InvoiceItem extends Model
 {
     use HasFactory;
 
-    protected array $fillable = [
+    protected $fillable = [
         'invoice_id',
         'item_description',
         'amount',

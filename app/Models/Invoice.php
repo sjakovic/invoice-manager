@@ -54,7 +54,7 @@ class Invoice extends Model
 {
     use HasFactory, InvoiceLabel;
 
-    protected array $fillable = [
+    protected $fillable = [
         'customer_id',
         'year',
         'number',

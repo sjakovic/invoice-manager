@@ -41,7 +41,7 @@ class Customer extends Model
 {
     use HasFactory;
 
-    protected array $fillable = [
+    protected $fillable = [
         'company_name',
         'pib',
         'mb',
