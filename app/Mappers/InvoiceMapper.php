@@ -44,10 +44,6 @@ class InvoiceMapper implements MapperInterface {
         return $dto;
     }
 
-    public function mapToModelUpdate(array $data) {
-        // TODO: Implement mapToUpdate() method.
-    }
-
     public function mapToModelCreateAttributes(InvoiceDTO $dto): array {
         $data = [];
         $data['year'] = $dto->year;

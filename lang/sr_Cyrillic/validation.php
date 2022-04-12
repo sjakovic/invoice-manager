@@ -155,5 +155,13 @@ return [
     'attributes' => [
         'customer_id'           => 'Клијент',
         'payment_deadline'      => 'Доспеће',
+        'company_name'          => 'Назив фирме',
+        'pib'                   => 'ПИБ',
+        'mb'                    => 'МБ',
+        'address'               => 'Адреса',
+        'city'                  => 'Град',
+        'postal_code'           => 'Поштански број',
+        'email'                 => 'Е-пошта',
+        'phone'                 => 'Телефон',
     ],
 ];

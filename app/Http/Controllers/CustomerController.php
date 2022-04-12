@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Filters\CustomerSearchFilter;
+use App\Mappers\CustomerMapper;
 use App\Repositories\CustomerRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
 {
     public function __construct(
         private CustomerRepository $customerRepository,
+        private CustomerMapper     $customerMapper,
     )
     {
     }
@@ -34,18 +37,25 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        return view('customer.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $this->getValidator()->validate();
+
+        $customerDTO = $this->customerMapper->mapToModelCreateDTO($request->all());
+
+        if ($this->customerRepository->create($customerDTO)) {
+            return redirect()->route('customers')->with('success', __('messages.data_saved'));
+        } else {
+            return redirect()->back()->with('error', __('messages.data_error'));
+        }
     }
 
     /**
@@ -91,5 +101,19 @@ class CustomerController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    private function getValidator()
+    {
+        return Validator::make(request()->all(), [
+            'company_name' => ['required'],
+            'pib' => ['required'],
+            'mb' => ['required'],
+            'address' => ['required'],
+            'city' => ['required'],
+            'postal_code' => ['required'],
+            'email' => ['required', 'email'],
+            'phone' => ['required'],
+        ]);
     }
 }

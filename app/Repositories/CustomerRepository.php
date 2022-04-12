@@ -2,13 +2,21 @@
 
 namespace App\Repositories;
 
+use App\DTO\CustomerDTO;
 use App\Filters\CustomerSearchFilter;
+use App\Mappers\CustomerMapper;
 use App\Models\Customer;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
 final class CustomerRepository
 {
+    public function __construct(
+        private CustomerMapper $customerMapper,
+    )
+    {
+    }
+
     public function table(CustomerSearchFilter $filter): Collection
     {
         $records = Customer::where($this->searchFilter($filter))->orderBy('company_name', 'asc')->get();
@@ -39,5 +47,16 @@ final class CustomerRepository
     public function all(): Collection
     {
         return Customer::all();
+    }
+
+    public function create(CustomerDTO $customerDTO): bool
+    {
+        try {
+            $data = $this->customerMapper->mapToModelUpdateAttributes($customerDTO);
+            Customer::create($data);
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 }

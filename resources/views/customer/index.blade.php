@@ -21,11 +21,12 @@
                     {{ __('messages.btn_search') }}
                 </button>
             </div>
-            <a href="{{ route(name: 'invoice-create', absolute: false) }}" class="btn btn-sm btn-outline-dark">
+            <a href="{{ route(name: 'customer-create', absolute: false) }}" class="btn btn-sm btn-outline-dark">
                 {{ __('messages.btn_add') }}
             </a>
         </div>
     </form>
+    @include('components.alert.errors')
     <div class="table-responsive">
         <table class="table table-striped table-sm">
             <thead>

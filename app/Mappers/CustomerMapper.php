@@ -2,27 +2,39 @@
 
 namespace App\Mappers;
 
-use App\DTO\InvoiceDTO;
+use App\DTO\CustomerDTO;
 use App\Interfaces\MapperInterface;
-use App\Repositories\CustomerRepository;
 
 class CustomerMapper implements MapperInterface
 {
-    public function __construct(
-        private CustomerRepository $customerRepository,
-    )
+    public function mapToModelCreateDTO(array $data): CustomerDTO
     {
+        $dto = new CustomerDTO();
+        $dto->companyName = (string)$data['company_name'];
+        $dto->pib = (string)$data['pib'];
+        $dto->mb = (string)$data['mb'];
+        $dto->address = (string)$data['address'];
+        $dto->city = (string)$data['city'];
+        $dto->postalCode = (string)$data['postal_code'];
+        $dto->email = (string)$data['email'];
+        $dto->phone = (string)$data['phone'];
 
+        return $dto;
     }
 
-    public function mapToModelCreate(array $data): InvoiceDTO
+    public function mapToModelUpdateAttributes(CustomerDTO $dto): array
     {
-        // TODO: Implement mapToUpdate() method.
-    }
+        $data = [];
+        $data['company_name'] = $dto->companyName;
+        $data['pib'] = $dto->pib;
+        $data['mb'] = $dto->mb;
+        $data['address'] = $dto->address;
+        $data['city'] = $dto->city;
+        $data['postal_code'] = $dto->postalCode;
+        $data['email'] = $dto->email;
+        $data['phone'] = $dto->phone;
 
-    public function mapToModelUpdate(array $data)
-    {
-        // TODO: Implement mapToUpdate() method.
+        return $data;
     }
 
 }

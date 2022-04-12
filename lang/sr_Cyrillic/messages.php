@@ -23,10 +23,14 @@ return [
     'customer_mb' => 'МБ',
     'customer_address' => 'Адреса',
     'customer_city' => 'Град',
+    'customer_phone' => 'Телефон',
+    'customer_email' => 'Е-пошта',
+    'customer_postal_code' => 'Поштански број',
 
     'page_title_invoices' => 'Фактуре',
     'page_title_invoice_add' => 'Нова фактура',
     'page_title_customers' => 'Клијенти',
+    'page_title_customer_add' => 'Нови клијент',
 
     'col_action' => 'Акција',
 
