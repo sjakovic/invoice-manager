@@ -1,0 +1,75 @@
+$invoice-border-color: #ccc;
+
+.invoice_basic_data {
+  width: 100%;
+
+  table.invoice_company_data {
+    min-width: 450px;
+  }
+
+  div.invoice_customer {
+    border: 2px solid #000000;
+    border-radius: 7px;
+    padding: 10px;
+    min-width: 200px;
+  }
+}
+
+.invoice__table_items {
+  border: 1px solid #ccc;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.invoice__table_items {
+  th, td {
+    border: 1px solid $invoice-border-color;
+    padding: 10px;
+  }
+
+  th {
+    text-align: center;
+  }
+
+  td {
+    text-align: right;
+  }
+}
+
+.invoice__table_recapitulation {
+  width: 400px;
+
+  th, td {
+    border: 1px solid $invoice-border-color;
+    padding: 5px;
+  }
+
+  th {
+    text-align: center;
+  }
+
+  th:first-child {
+    border-left: none;
+    border-top: none;
+    text-align: left;
+  }
+
+  td {
+    text-align: right;
+  }
+
+  td:first-child {
+    text-align: left;
+  }
+}
+
+.invoice__discount {
+  width: 100%;
+  margin-top: 20px;
+
+}
+
+.invoice__billing_info {
+  margin-top: 20px;
+  width: 100%;
+}
