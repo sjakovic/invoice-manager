@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Traits\InvoiceItemLabel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * App\Models\InvoiceItem
@@ -24,14 +26,25 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|InvoiceItem whereTotal($value)
  * @method static \Illuminate\Database\Eloquent\Builder|InvoiceItem whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int $quantity
+ * @property string $amount
+ * @method static \Illuminate\Database\Eloquent\Builder|InvoiceItem whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InvoiceItem whereQuantity($value)
+ * @property-read \App\Models\Invoice $invoice
  */
 class InvoiceItem extends Model
 {
-    use HasFactory;
+    use HasFactory, InvoiceItemLabel;
 
     protected $fillable = [
         'invoice_id',
         'item_description',
+        'quantity',
         'amount',
     ];
+
+    public function invoice(): BelongsTo
+    {
+        return $this->belongsTo(Invoice::class);
+    }
 }

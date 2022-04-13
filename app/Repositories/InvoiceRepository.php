@@ -20,6 +20,15 @@ final class InvoiceRepository
     {
     }
 
+    /**
+     * @param int $id
+     * @return Invoice|Invoice[]|Collection|\Illuminate\Database\Eloquent\Model
+     */
+    public function find(int $id)
+    {
+        return Invoice::findOrFail($id);
+    }
+
     public function table(InvoiceSearchFilter $filter): Collection
     {
         $records = Invoice::where($this->searchFilter($filter))->orderBy('year', 'desc')

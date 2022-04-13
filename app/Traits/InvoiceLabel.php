@@ -19,6 +19,11 @@ trait InvoiceLabel
         return DateTimeHelper::webDateFormat($invoice->date_of_traffic);
     }
 
+    public function getPaymentDeadline(Invoice $invoice): string
+    {
+        return DateTimeHelper::webDateFormat($invoice->payment_deadline);
+    }
+
     public function getStatusLabel(Invoice $invoice): string
     {
         $tpl = match ($invoice->payment_status) {
@@ -32,6 +37,25 @@ trait InvoiceLabel
     public function getCustomerNameLabel(Invoice $invoice): string
     {
         return $invoice->customer_name;
+    }
+
+    public function getCustomerAddress(Invoice $invoice): string
+    {
+        return $invoice->customer_address;
+    }
+    public function getCustomerPIB(Invoice $invoice): string
+    {
+        return $invoice->customer_pib;
+    }
+
+    public function getCustomerMB(Invoice $invoice): string
+    {
+        return $invoice->customer_mb;
+    }
+
+    public function getCustomerCity(Invoice $invoice): string
+    {
+        return $invoice->customer_city;
     }
 
     public function getTotalLabel(Invoice $invoice): string
