@@ -15,6 +15,8 @@ API.pageManager = {};
 $('#modal_delete').on('show.bs.modal', function(e) {
     $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
 });
+
+feather.replace({ 'aria-hidden': 'true' });
 /*** General setup END ***/
 
 /*** Init pages controllers ***/
