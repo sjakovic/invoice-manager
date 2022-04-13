@@ -5,23 +5,28 @@ namespace App\Http\Controllers;
 use App\Filters\InvoiceSearchFilter;
 use App\Helpers\DateTimeHelper;
 use App\Mappers\InvoiceMapper;
+use App\Models\Invoice;
 use App\Repositories\CustomerRepository;
 use App\Repositories\InvoiceRepository;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class InvoiceController extends Controller {
+class InvoiceController extends Controller
+{
     public function __construct(
-        private InvoiceRepository $invoiceRepository,
+        private InvoiceRepository  $invoiceRepository,
         private CustomerRepository $customerRepository,
-        private InvoiceMapper $invoiceMapper,
-    ) {
+        private InvoiceMapper      $invoiceMapper,
+    )
+    {
     }
 
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index() {
+    public function index()
+    {
         $filter = new InvoiceSearchFilter();
         $filter->loadParameters();
 
@@ -38,7 +43,8 @@ class InvoiceController extends Controller {
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function create() {
+    public function create()
+    {
         return view('invoice.create', [
             'customers' => $this->customerRepository->all(),
             'nextInvoiceNumber' => $this->invoiceRepository->getInvoiceNextNumber(DateTimeHelper::currentYear()),
@@ -48,7 +54,8 @@ class InvoiceController extends Controller {
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
 
         $this->getValidator()->validate();
 
@@ -67,7 +74,8 @@ class InvoiceController extends Controller {
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show($id)
+    {
         //
     }
 
@@ -77,7 +85,8 @@ class InvoiceController extends Controller {
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
+    public function edit($id)
+    {
         //
     }
 
@@ -88,7 +97,8 @@ class InvoiceController extends Controller {
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         //
     }
 
@@ -98,11 +108,22 @@ class InvoiceController extends Controller {
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
+    public function destroy($id)
+    {
         //
     }
 
-    private function getValidator() {
+    public function pdf($id)
+    {
+        $invoice = $this->invoiceRepository->find($id);
+
+        $pdf = Pdf::loadView('invoice.invoice-pdf', compact('invoice'));
+
+        return $pdf->stream('invoice.pdf');
+    }
+
+    private function getValidator()
+    {
         return Validator::make(request()->all(), [
             'number' => ['required'],
             'year' => ['required'],

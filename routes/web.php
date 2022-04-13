@@ -24,6 +24,7 @@ Route::controller(InvoiceController::class)->group(function () {
     Route::get('/invoices/create', 'create')->name('invoice-create');
     Route::put('/invoices', 'store')->name('invoice-store');
     Route::post('/invoices', 'update')->name('invoice-update');
+    Route::get('/invoices/{id}/pdf', 'pdf')->name('invoice-pdf');
 });
 
 Route::controller(CustomerController::class)->group(function () {

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\InvoiceLabel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\Models\Invoice
@@ -49,6 +50,8 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property string|null $number_mark
  * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereNumberMark($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\InvoiceItem[] $items
+ * @property-read int|null $items_count
  */
 class Invoice extends Model
 {
@@ -71,4 +74,9 @@ class Invoice extends Model
         'customer_address',
         'customer_city',
     ];
+
+    public function items(): HasMany
+    {
+        return $this->hasMany(InvoiceItem::class);
+    }
 }
