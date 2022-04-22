@@ -3,6 +3,7 @@
     <img src="https://img.shields.io/depfu/dependencies/github/sjakovic/invoice-manager" />
     <img src="https://img.shields.io/github/license/sjakovic/invoice-manager?label=LICENSE" />
 </p>
+
 ## About Invoice Manager
 
 Invoice Manager is a web application for managing invoice for Pausal agencies in Serbia. It is build with Laravel 9 framework. List of features:
