@@ -1,5 +1,6 @@
 <p align="center"><h1>Invoice Manager</h1></p>
 <p align="center">
+    <img src="https://img.shields.io/depfu/dependencies/github/sjakovic/invoice-manager" />
     <img src="https://img.shields.io/github/license/sjakovic/invoice-manager?label=LICENSE" />
 </p>
 ## About Invoice Manager
