@@ -50,6 +50,9 @@ final class InvoiceRepository
                     DB::raw('LOWER(customer_name)'), 'like', '%' . strtolower($filter->customer) . '%'
                 );
             }
+            if(!empty($filter->year)) {
+                $query->where('year', '=', $filter->year);
+            }
         };
     }
 

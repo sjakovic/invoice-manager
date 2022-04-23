@@ -8,6 +8,21 @@
         <h1 class="h2">{{ __('messages.page_title_invoices') }}</h1>
     </div>
     <form method="GET" action="{{ route(name: 'invoices', absolute: false) }}" class="form" id="invoices_filter_form">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
+            <div class="btn-toolbar mb-2 mb-md-0">
+                <div class="btn-group me-2">
+                    @foreach(range(date('Y-m-d'), 2017) as $item)
+                        <input type="radio"
+                               class="btn-check"
+                               name="filter_year"
+                               id="filter_year_{{ $item }}"
+                               value="{{ $item }}"
+                               @if($item == $filter->year) checked @endif >
+                        <label class="btn btn-outline-info" for="filter_year_{{ $item }}">{{ $item }}</label>
+                    @endforeach
+                </div>
+            </div>
+        </div>
         <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <div class="btn-toolbar mb-2 mb-md-0">
@@ -30,15 +45,15 @@
     <div class="table-responsive">
         <table class="table table-striped table-sm">
             <thead>
-                <tr>
-                    <th scope="col" class="text-center">#</th>
-                    <th scope="col" class="text-center">{{ __('messages.invoice_number') }}</th>
-                    <th scope="col" class="text-center">{{ __('messages.invoice_date_of_traffic') }}</th>
-                    <th scope="col" class="text-center">{{ __('messages.invoice_customer') }}</th>
-                    <th scope="col" class="text-center">{{ __('messages.invoice_total') }}</th>
-                    <th scope="col" class="text-center">{{ __('messages.invoice_payment_status') }}</th>
-                    <th scope="col" class="text-center">&nbsp;</th>
-                </tr>
+            <tr>
+                <th scope="col" class="text-center">#</th>
+                <th scope="col" class="text-center">{{ __('messages.invoice_number') }}</th>
+                <th scope="col" class="text-center">{{ __('messages.invoice_date_of_traffic') }}</th>
+                <th scope="col" class="text-center">{{ __('messages.invoice_customer') }}</th>
+                <th scope="col" class="text-center">{{ __('messages.invoice_total') }}</th>
+                <th scope="col" class="text-center">{{ __('messages.invoice_payment_status') }}</th>
+                <th scope="col" class="text-center">&nbsp;</th>
+            </tr>
             </thead>
             <tbody>
             @foreach($records as $record)
