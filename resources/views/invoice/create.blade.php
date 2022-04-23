@@ -27,9 +27,9 @@
                     </label>
                     <div class="col-sm-3 col-xs-12">
                         <select name="year" class="form-control form-control-sm col-sm-2">
-                            <option value="2022">2022</option>
-                            <option value="2022">2021</option>
-                            <option value="2022">2020</option>
+                            @foreach(range(date('Y'), 2017) as $item)
+                                <option value="{{ $item }}">{{ $item }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
