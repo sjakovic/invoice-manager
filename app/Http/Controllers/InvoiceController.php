@@ -48,6 +48,7 @@ class InvoiceController extends Controller
         return view('invoice.create', [
             'customers' => $this->customerRepository->all(),
             'nextInvoiceNumber' => $this->invoiceRepository->getInvoiceNextNumber(DateTimeHelper::currentYear()),
+            'invoiceItems' => old('items', [['desc' => '', 'quantity' => 1, 'amount' => '']]),
         ]);
     }
 
@@ -59,7 +60,7 @@ class InvoiceController extends Controller
 
         $this->getValidator()->validate();
 
-        $invoiceDTO = $this->invoiceMapper->mapToModelCreate($request->all());
+        $invoiceDTO = $this->invoiceMapper->toCreateInvoiceDTO($request->all());
 
         if ($this->invoiceRepository->create($invoiceDTO)) {
             return redirect()->back()->with('success', __('messages.data_saved'));
@@ -131,6 +132,8 @@ class InvoiceController extends Controller
             'date_of_traffic' => ['required'],
             'payment_deadline' => ['required'],
             'items' => ['required'],
+        ], [
+            'number.required' => __('messages.validation_invoice_number_validation'),
         ]);
     }
 }

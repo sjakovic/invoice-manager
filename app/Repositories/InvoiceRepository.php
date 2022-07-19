@@ -50,7 +50,7 @@ final class InvoiceRepository
                     DB::raw('LOWER(customer_name)'), 'like', '%' . strtolower($filter->customer) . '%'
                 );
             }
-            if(!empty($filter->year)) {
+            if (!empty($filter->year)) {
                 $query->where('year', '=', $filter->year);
             }
         };
@@ -59,21 +59,19 @@ final class InvoiceRepository
     public function create(InvoiceDTO $dto): bool
     {
         try {
-
             DB::transaction(function () use ($dto) {
-                $data = $this->invoiceMapper->mapToModelCreateAttributes($dto);
 
-                $invoice = Invoice::create($data);
+                $invoice = Invoice::create($dto->toArray());
 
-                foreach ($dto->items as $item) {
-                    $item['invoice_id'] = $invoice->id;
-                    $iiDTO = $this->invoiceItemMapper->mapToModelCreate($item);
-                    InvoiceItem::create($this->invoiceItemMapper->mapToModelCreateAttributes($iiDTO));
+                /*** @var \App\DTO\InvoiceItemDTO $itemDTO ** */
+                foreach ($dto->items as $itemDTO) {
+                    $itemDTO->invoiceId = $invoice->id;
+                    InvoiceItem::create($itemDTO->toArray());
                 }
             });
-
             return true;
         } catch (\Exception $e) {
+            dd($e->getMessage());
             return false;
         }
     }

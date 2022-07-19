@@ -2,7 +2,9 @@
 
 namespace App\DTO;
 
-class InvoiceDTO
+use App\Helpers\DateTimeHelper;
+
+class InvoiceDTO extends BaseDTO
 {
     public int $customerId;
     public int $year;
@@ -18,4 +20,24 @@ class InvoiceDTO
     public string $customerAddress;
     public string $customerCity;
     public array $items;
+
+    public function toArray(): array
+    {
+        $data = [];
+        $data['year'] = $this->year;
+        $data['number'] = $this->number;
+        $data['number_mark'] = $this->numberMark;
+        $data['date_of_traffic'] = DateTimeHelper::dbDateFormat($this->dateOfTraffic);
+        $data['payment_deadline'] = DateTimeHelper::dbDateFormat($this->paymentDeadline);
+        $data['total'] = $this->total;
+        $data['payment_status'] = $this->paymentStatus;
+        $data['customer_id'] = $this->customerId;
+        $data['customer_name'] = $this->customerName;
+        $data['customer_pib'] = $this->customerPib;
+        $data['customer_mb'] = $this->customerMb;
+        $data['customer_address'] = $this->customerAddress;
+        $data['customer_city'] = $this->customerCity;
+
+        return $data;
+    }
 }

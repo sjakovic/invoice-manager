@@ -5,6 +5,7 @@ return [
     'sidebar_dashboard' => 'Контролна табла',
     'sidebar_invoices' => 'Фактуре',
     'sidebar_customers' => 'Клијенти',
+
     'invoice_number' => 'Број фактуре',
     'invoice_date_of_traffic' => 'Датум рачуна',
     'invoice_payment_deadline' => 'Доспеће',
@@ -17,6 +18,8 @@ return [
     'invoice_item_desc' => 'Опис',
     'invoice_item_quantity' => 'Количина',
     'invoice_item_amount' => 'Износ',
+    'invoice_item_total' => 'Укупно:',
+    'invoice_item_btn_add' => 'Додај ставку',
 
     'invoice_pdf_number' => 'Број',
     'invoice_pdf_pib' => 'ПИБ:',
@@ -34,6 +37,8 @@ return [
     'invoice_pdf_total' => 'УКУПНО РСД:',
     'invoice_pdf_for_payment' => 'За плаћање РСД:',
     'invoice_pdf_info' => 'На основу члана 33 Закона о ПДВ, овај рачуна је ослобођен пореза на додату вредност.<br>Овај рачун је валидан без печата и потписа.',
+
+    'validation_invoice_number_validation' => 'Поље Број фактуре је обавезно.',
 
     'customer_company_name' => 'Назив фирме',
     'customer_pib' => 'ПИБ',

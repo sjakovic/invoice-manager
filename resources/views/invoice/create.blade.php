@@ -53,7 +53,9 @@
                         <select name="customer_id" class="form-control form-control-sm">
                             <option value=""></option>
                             @foreach($customers as $customer)
-                                <option value="{{ $customer->id }}">{{ $customer->company_name }}</option>
+                                <option value="{{ $customer->id }}" @if(old('customer_id') == $customer->id) selected @endif>
+                                    {{ $customer->company_name }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -66,7 +68,7 @@
                         <input type="date"
                                name="date_of_traffic"
                                class="form-control form-control-sm"
-                               value="{{ date('Y-m-d') }}"
+                               value="{{ old('date_of_traffic', date('Y-m-d')) }}"
                                min="2015-01-01"
                                max="2100-12-31" />
                     </div>
@@ -78,7 +80,8 @@
                     <div class="col-sm-3 col-xs-12">
                         <input type="date"
                                name="payment_deadline"
-                               class="form-control form-control-sm" placeholder="" />
+                               class="form-control form-control-sm"
+                               value="{{ old('payment_deadline', date('Y-m-d')) }}" />
                     </div>
                 </div>
                 <div class="row mb-1">
@@ -86,82 +89,56 @@
                         {{ __('messages.invoice_items') }}
                     </label>
                     <div class="col-sm-9">
-                        <table class="table table-responsive-sm">
+                        <table class="table table-responsive-sm" id="table_invoice_items">
                             <thead class="bg-light">
                                 <tr>
                                     <th class="col-6 text-center">{{ __('messages.invoice_item_desc') }}</th>
                                     <th class="col-2 text-center">{{ __('messages.invoice_item_quantity') }}</th>
                                     <th class="col-3 text-center">{{ __('messages.invoice_item_amount') }}</th>
+                                    <th class="col-3 text-center"></th>
                                 </tr>
                             </thead>
-                            <tr>
-                                <td>
-                                    <input name="items[0][desc]"
-                                           type="text"
-                                           class="form-control form-control-sm"
-                                           value="{{ old('items[0][desc]') }}">
-                                </td>
-                                <td>
-                                    <input name="items[0][quantity]"
-                                           type="number"
-                                           minl="1"
-                                           class="form-control form-control-sm js_quantity"
-                                           value="{{ old('items[0][quantity]', 1) }}">
-                                </td>
-                                <td>
-                                    <input name="items[0][amount]"
-                                           type="text"
-                                           class="form-control form-control-sm js_amount"
-                                           value="{{ old('items[0][amount]', 0) }}">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input name="items[1][desc]"
-                                           type="text"
-                                           class="form-control form-control-sm"
-                                           value="{{ old('items[1][desc]') }}">
-                                </td>
-                                <td>
-                                    <input name="items[1][quantity]"
-                                           type="number"
-                                           minl="1"
-                                           class="form-control form-control-sm js_quantity"
-                                           value="{{ old('items[1][quantity]', 1) }}">
-                                </td>
-                                <td>
-                                    <input name="items[1][amount]"
-                                           type="text"
-                                           class="form-control form-control-sm js_amount"
-                                           value="{{ old('items[1][amount]', 0) }}">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input name="items[2][desc]"
-                                           type="text"
-                                           class="form-control form-control-sm"
-                                           value="{{ old('items[2][desc]') }}">
-                                </td>
-                                <td>
-                                    <input name="items[2][quantity]"
-                                           type="number"
-                                           minl="1"
-                                           class="form-control form-control-sm js_quantity"
-                                           value="{{ old('items[2][quantity]', 1) }}">
-                                </td>
-                                <td>
-                                    <input name="items[2][amount]"
-                                           type="text"
-                                           class="form-control form-control-sm js_amount"
-                                           value="{{ old('items[2][amount]', 0) }}">
-                                </td>
-                            </tr>
+                            @foreach($invoiceItems as $item)
+                                <tr class="js_invoice_item">
+                                    <td>
+                                        <input name="items[{{ $loop->index }}][desc]"
+                                               type="text"
+                                               class="form-control form-control-sm"
+                                               value="{{ $item['desc'] }}">
+                                    </td>
+                                    <td>
+                                        <input name="items[{{ $loop->index }}][quantity]"
+                                               type="number"
+                                               minl="1"
+                                               class="form-control form-control-sm js_quantity"
+                                               value="{{ $item['quantity'] }}">
+                                    </td>
+                                    <td>
+                                        <input name="items[{{ $loop->index }}][amount]"
+                                               type="text"
+                                               class="form-control form-control-sm js_amount"
+                                               value="{{ $item['amount'] }}">
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-danger js_btn_item_remove">
+                                            {{ __('messages.btn_delete') }}
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
                             <tr>
                                 <td colspan="2" class="text-end">
-                                    Ukupno:
+                                    {{ __('messages.invoice_item_total') }}
                                 </td>
                                 <th class="text-center"><span id="total"></span></th>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" class="bg-light">
+                                    <button id="btn_item_add" class="btn btn-sm btn-outline-dark float-end">
+                                        {{ __('messages.invoice_item_btn_add') }}
+                                    </button>
+                                </td>
                             </tr>
                         </table>
                     </div>
