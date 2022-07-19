@@ -86,6 +86,36 @@
                 </div>
                 <div class="row mb-1">
                     <label class="col-sm-3 col-form-label text-end">
+                        {{ __('messages.invoice_domestic') }}
+                    </label>
+                    <div class="col-sm-3 col-xs-12">
+                        <div class="form-check mt-2">
+                            <input
+                                name="domestic"
+                                id="domestic"
+                                class="form-check-input"
+                                type="checkbox"
+                                value="1"
+                                @if(empty(old())) checked @elseif(!empty(old()) && !empty(old('domestic'))) checked @endif>
+                            <label class="form-check-label" for="domestic">
+                                {{ __('messages.invoice_domestic_yes') }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <label class="col-sm-3 col-form-label text-end">
+                        {{ __('messages.invoice_exchange_rate') }}
+                    </label>
+                    <div class="col-sm-2 col-xs-12">
+                        <input type="text"
+                               name="exchange_rate"
+                               class="form-control form-control-sm col-sm-2"
+                               value="{{ old('exchange_rate') }}">
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <label class="col-sm-3 col-form-label text-end">
                         {{ __('messages.invoice_items') }}
                     </label>
                     <div class="col-sm-9">
@@ -130,7 +160,7 @@
                                 <td colspan="2" class="text-end">
                                     {{ __('messages.invoice_item_total') }}
                                 </td>
-                                <th class="text-center"><span id="total"></span></th>
+                                <th class="text-end"><span id="total"></span></th>
                                 <td></td>
                             </tr>
                             <tr>

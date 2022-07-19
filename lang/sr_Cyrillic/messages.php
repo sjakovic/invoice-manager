@@ -14,6 +14,9 @@ return [
     'invoice_payment_status' => 'Статус плаћања',
     'invoice_year' => 'Година',
     'invoice_number_mark' => 'Ознака',
+    'invoice_domestic' => 'Домаћи клијент',
+    'invoice_domestic_yes' => 'ДА',
+    'invoice_exchange_rate' => 'Курс',
     'invoice_items' => 'Ставке',
     'invoice_item_desc' => 'Опис',
     'invoice_item_quantity' => 'Количина',
@@ -39,6 +42,7 @@ return [
     'invoice_pdf_info' => 'На основу члана 33 Закона о ПДВ, овај рачуна је ослобођен пореза на додату вредност.<br>Овај рачун је валидан без печата и потписа.',
 
     'validation_invoice_number_validation' => 'Поље Број фактуре је обавезно.',
+    'validation_items_required' => 'Ставке фактуре су обавезне.',
 
     'customer_company_name' => 'Назив фирме',
     'customer_pib' => 'ПИБ',

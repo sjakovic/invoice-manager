@@ -73,6 +73,8 @@ class Invoice extends Model
         'customer_mb',
         'customer_address',
         'customer_city',
+        'exchange_rate',
+        'domestic',
     ];
 
     public function items(): HasMany

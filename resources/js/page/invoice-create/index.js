@@ -12,6 +12,8 @@ const PageInvoiceCreate = (function ($) {
 
     function initialize() {
         initEvents();
+
+        $(selector.inputQuantity).trigger('change');
     }
 
     return {

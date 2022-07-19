@@ -3,6 +3,7 @@
 namespace App\DTO;
 
 use App\Helpers\DateTimeHelper;
+use App\Helpers\NumberHelper;
 
 class InvoiceDTO extends BaseDTO
 {
@@ -19,6 +20,8 @@ class InvoiceDTO extends BaseDTO
     public string $customerMb;
     public string $customerAddress;
     public string $customerCity;
+    public float|null $exchangeRate;
+    public bool $domestic;
     public array $items;
 
     public function toArray(): array
@@ -37,6 +40,8 @@ class InvoiceDTO extends BaseDTO
         $data['customer_mb'] = $this->customerMb;
         $data['customer_address'] = $this->customerAddress;
         $data['customer_city'] = $this->customerCity;
+        $data['exchange_rate'] = $this->exchangeRate;
+        $data['domestic'] = $this->domestic;
 
         return $data;
     }

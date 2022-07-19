@@ -4,6 +4,7 @@ namespace App\Mappers;
 
 use App\DTO\InvoiceDTO;
 use App\Enum\InvoiceStatus;
+use App\Helpers\NumberHelper;
 use App\Interfaces\MapperInterface;
 use App\Repositories\CustomerRepository;
 
@@ -26,6 +27,8 @@ class InvoiceMapper implements MapperInterface
         $dto->dateOfTraffic = (string)$data['date_of_traffic'];
         $dto->paymentDeadline = (string)$data['payment_deadline'];
         $dto->paymentStatus = InvoiceStatus::UNPAID;
+        $dto->domestic = (bool)@$data['domestic'];
+        $dto->exchangeRate = NumberHelper::dbDecimalFormat($data['exchange_rate']);
         $dto->customerId = (int)$data['customer_id'];
         $dto->total = 0;
 

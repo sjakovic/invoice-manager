@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Filters\InvoiceSearchFilter;
 use App\Helpers\DateTimeHelper;
 use App\Mappers\InvoiceMapper;
-use App\Models\Invoice;
 use App\Repositories\CustomerRepository;
 use App\Repositories\InvoiceRepository;
+use App\Rules\InvoiceItemsRequired;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -131,7 +131,7 @@ class InvoiceController extends Controller
             'customer_id' => ['required'],
             'date_of_traffic' => ['required'],
             'payment_deadline' => ['required'],
-            'items' => ['required'],
+            'items' => [new InvoiceItemsRequired()],
         ], [
             'number.required' => __('messages.validation_invoice_number_validation'),
         ]);

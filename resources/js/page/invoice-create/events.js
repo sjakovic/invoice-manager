@@ -1,5 +1,5 @@
 import {selector} from "./selector";
-import {uuid} from "../../app/helper";
+import {uuid, numberWithCommas} from "../../app/helper";
 import {translate} from "../../app/localisation";
 
 const recalculateTotal = function (e) {
@@ -40,7 +40,7 @@ const _recalculateTotal = function () {
 
     let total = sums.reduce((sum, a) => sum + a, 0);
 
-    $(selector.total).html(total);
+    $(selector.total).html(numberWithCommas(total));
 }
 
 const _rowTmpl = function (uuid) {
