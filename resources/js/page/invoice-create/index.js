@@ -12,7 +12,7 @@ const PageInvoiceCreate = (function ($) {
 
     function initialize() {
         initEvents();
-
+        console.log('asfd');
         $(selector.inputQuantity).trigger('change');
     }
 

@@ -22,8 +22,9 @@ Route::get('/', function () {
 Route::controller(InvoiceController::class)->group(function () {
     Route::get('/invoices', 'index')->name('invoices');
     Route::get('/invoices/create', 'create')->name('invoice-create');
+    Route::get('/invoices/{id}', 'edit')->name('invoice-edit');
     Route::put('/invoices', 'store')->name('invoice-store');
-    Route::post('/invoices', 'update')->name('invoice-update');
+    Route::post('/invoices/{id}', 'update')->name('invoice-update');
     Route::get('/invoices/{id}/pdf', 'pdf')->name('invoice-pdf');
 });
 

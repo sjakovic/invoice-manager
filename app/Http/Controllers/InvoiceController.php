@@ -4,20 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Filters\InvoiceSearchFilter;
 use App\Helpers\DateTimeHelper;
-use App\Mappers\InvoiceMapper;
+use App\Http\Requests\InvoiceStorePutRequest;
+use App\Http\Requests\InvoiceUpdatePostRequest;
+use App\Models\Invoice;
 use App\Repositories\CustomerRepository;
 use App\Repositories\InvoiceRepository;
-use App\Rules\InvoiceItemsRequired;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class InvoiceController extends Controller
 {
     public function __construct(
         private InvoiceRepository  $invoiceRepository,
         private CustomerRepository $customerRepository,
-        private InvoiceMapper      $invoiceMapper,
     )
     {
     }
@@ -55,15 +53,10 @@ class InvoiceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(InvoiceStorePutRequest $request)
     {
-
-        $this->getValidator()->validate();
-
-        $invoiceDTO = $this->invoiceMapper->toCreateInvoiceDTO($request->all());
-
-        if ($this->invoiceRepository->create($invoiceDTO)) {
-            return redirect()->back()->with('success', __('messages.data_saved'));
+        if ($this->invoiceRepository->create($request->all())) {
+            return redirect()->route('invoices')->with('success', __('messages.data_saved'));
         } else {
             return redirect()->back()->with('error', __('messages.data_error'));
         }
@@ -88,19 +81,29 @@ class InvoiceController extends Controller
      */
     public function edit($id)
     {
-        //
+        $invoice = $this->invoiceRepository->findById($id);
+        $invoice->load('items');
+
+        return view('invoice.edit', [
+            'customers' => $this->customerRepository->all(),
+            'invoice' => $invoice,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param InvoiceUpdatePostRequest $request
+     * @param $id
+     * @return void
      */
-    public function update(Request $request, $id)
+    public function update(InvoiceUpdatePostRequest $request, string|int $id)
     {
-        //
+        if ($this->invoiceRepository->update($id, $request->all())) {
+            return redirect()->back()->with('success', __('messages.data_saved'));
+        } else {
+            return redirect()->back()->with('error', __('messages.data_error'));
+        }
     }
 
     /**
@@ -121,19 +124,5 @@ class InvoiceController extends Controller
         $pdf = Pdf::loadView('invoice.invoice-pdf', compact('invoice'));
 
         return $pdf->stream('invoice.pdf');
-    }
-
-    private function getValidator()
-    {
-        return Validator::make(request()->all(), [
-            'number' => ['required'],
-            'year' => ['required'],
-            'customer_id' => ['required'],
-            'date_of_traffic' => ['required'],
-            'payment_deadline' => ['required'],
-            'items' => [new InvoiceItemsRequired()],
-        ], [
-            'number.required' => __('messages.validation_invoice_number_validation'),
-        ]);
     }
 }

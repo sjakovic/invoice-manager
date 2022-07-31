@@ -3,7 +3,6 @@
 namespace App\DTO;
 
 use App\Helpers\DateTimeHelper;
-use App\Helpers\NumberHelper;
 
 class InvoiceDTO extends BaseDTO
 {
@@ -42,6 +41,14 @@ class InvoiceDTO extends BaseDTO
         $data['customer_city'] = $this->customerCity;
         $data['exchange_rate'] = $this->exchangeRate;
         $data['domestic'] = $this->domestic;
+
+        return $data;
+    }
+
+    public function toUpdateArray(): array
+    {
+        $data = $this->toArray();
+        $data['id'] = $this->id;
 
         return $data;
     }

@@ -55,6 +55,7 @@ return [
 
     'page_title_invoices' => 'Фактуре',
     'page_title_invoice_add' => 'Нова фактура',
+    'page_title_invoice_edit' => 'Измена фактуре',
     'page_title_customers' => 'Клијенти',
     'page_title_customer_add' => 'Нови клијент',
 

@@ -2,22 +2,22 @@
 
 namespace App\Repositories;
 
-use App\DTO\InvoiceDTO;
+use App\Enum\InvoiceStatus;
 use App\Filters\InvoiceSearchFilter;
-use App\Mappers\InvoiceItemMapper;
-use App\Mappers\InvoiceMapper;
+use App\Helpers\NumberHelper;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
-final class InvoiceRepository
+final class InvoiceRepository extends BaseRepository
 {
     public function __construct(
-        private InvoiceMapper     $invoiceMapper,
-        private InvoiceItemMapper $invoiceItemMapper,
+        protected Invoice          $invoice,
+        private CustomerRepository $customerRepository,
     )
     {
+        parent::__construct($this->invoice);
     }
 
     /**
@@ -56,18 +56,76 @@ final class InvoiceRepository
         };
     }
 
-    public function create(InvoiceDTO $dto): bool
+    public function create(array $data): Invoice|bool
     {
         try {
-            DB::transaction(function () use ($dto) {
+            $this->model = new Invoice();
+            DB::transaction(function () use ($data) {
+                $customer = $this->customerRepository->find($data['customer_id']);
 
-                $invoice = Invoice::create($dto->toArray());
+                $this->model->year = (int)$data['year'];
+                $this->model->number = (int)$data['number'];
+                $this->model->number_mark = (string)$data['number_mark'];
+                $this->model->date_of_traffic = (string)$data['date_of_traffic'];
+                $this->model->payment_deadline = (string)$data['payment_deadline'];
+                $this->model->payment_status = InvoiceStatus::UNPAID;
+                $this->model->domestic = (bool)@$data['domestic'];
+                $this->model->exchange_rate = NumberHelper::dbDecimalFormat($data['exchange_rate']);
+                $this->model->customer_id = (int)$data['customer_id'];
+                $this->model->total = array_sum(array_column($data['items'], 'amount'));
+                $this->model->customer_name = $customer->company_name;
+                $this->model->customer_pib = $customer->pib;
+                $this->model->customer_mb = $customer->mb;
+                $this->model->customer_address = $customer->address;
+                $this->model->customer_city = $customer->city;
+                $this->model->save();
 
-                /*** @var \App\DTO\InvoiceItemDTO $itemDTO ** */
-                foreach ($dto->items as $itemDTO) {
-                    $itemDTO->invoiceId = $invoice->id;
-                    InvoiceItem::create($itemDTO->toArray());
-                }
+                array_walk($data['items'], function ($item) {
+                    $invoiceItem = new InvoiceItem();
+                    $invoiceItem->invoice_id = $this->model->id;
+                    $invoiceItem->quantity = (int)$item['quantity'];
+                    $invoiceItem->item_description = (string)$item['desc'];
+                    $invoiceItem->amount = (float)$item['amount'];
+                    $invoiceItem->save();
+                });
+            });
+            return $this->model;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function update(int|string $id, array $data): bool
+    {
+        try {
+            DB::transaction(function () use ($data, $id) {
+
+                /*** @var Invoice $invoice ** */
+                $this->model = $this->findById($id);
+
+                $this->model->year = (int)$data['year'];
+                $this->model->number = (int)$data['number'];
+                $this->model->number_mark = (string)$data['number_mark'];
+                $this->model->date_of_traffic = (string)$data['date_of_traffic'];
+                $this->model->payment_deadline = (string)$data['payment_deadline'];
+                $this->model->payment_status = InvoiceStatus::UNPAID;
+                $this->model->domestic = (bool)@$data['domestic'];
+                $this->model->exchange_rate = NumberHelper::dbDecimalFormat($data['exchange_rate']);
+                $this->model->customer_id = (int)$data['customer_id'];
+                $this->model->total = array_sum(array_column($data['items'], 'amount'));
+                $this->model->save();
+
+                $this->model->items->each(function (InvoiceItem $item) {
+                    $item->delete();
+                });
+                array_walk($data['items'], function ($item) {
+                    $invoiceItem = new InvoiceItem();
+                    $invoiceItem->invoice_id = $this->model->id;
+                    $invoiceItem->quantity = (int)$item['quantity'];
+                    $invoiceItem->item_description = (string)$item['desc'];
+                    $invoiceItem->amount = (float)$item['amount'];
+                    $invoiceItem->save();
+                });
             });
             return true;
         } catch (\Exception $e) {

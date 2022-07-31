@@ -52,6 +52,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereNumberMark($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\InvoiceItem[] $items
  * @property-read int|null $items_count
+ * @property string|null $exchange_rate
+ * @property int $domestic
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereDomestic($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereExchangeRate($value)
  */
 class Invoice extends Model
 {

@@ -65,10 +65,14 @@
                     <td class="text-end align-middle">{{ $record->getTotalLabel($record) }}</td>
                     <td class="text-center align-middle">{!! $record->getStatusLabel($record) !!}</td>
                     <td class="fit-cell-width">
-                        <a href="{{ route(name: 'invoice-pdf', parameters: ['id' => $record->id], absolute: false) }}"
+                        <a href="{{ route('invoice-pdf', ['id' => $record->id], false) }}"
                            class="btn btn-sm btn-danger"
-                           target="_blank">{{ __('messages.btn_pdf') }}</a>
-                        <a href="#" class="btn btn-sm btn-warning">{{ __('messages.btn_edit') }}</a>
+                           target="_blank">{{ __('messages.btn_pdf') }}
+                        </a>
+                        <a href="{{ route('invoices-edit', ['id' => $record->id], false) }}"
+                           class="btn btn-sm btn-warning">
+                            {{ __('messages.btn_edit') }}
+                        </a>
                     </td>
                 </tr>
             @endforeach
