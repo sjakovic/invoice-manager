@@ -69,7 +69,7 @@
                            class="btn btn-sm btn-danger"
                            target="_blank">{{ __('messages.btn_pdf') }}
                         </a>
-                        <a href="{{ route('invoices-edit', ['id' => $record->id], false) }}"
+                        <a href="{{ route('invoice-edit', ['id' => $record->id], false) }}"
                            class="btn btn-sm btn-warning">
                             {{ __('messages.btn_edit') }}
                         </a>
