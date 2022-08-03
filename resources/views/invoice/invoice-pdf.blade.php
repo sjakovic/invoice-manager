@@ -18,7 +18,7 @@
         }
 
         .table-item-td-padding {
-            padding: 5px 3px;
+            padding: 5px;
         }
 
         .text-center {
@@ -35,17 +35,24 @@
         }
 
         .bg-table-head {
-            background-color: #ccc;
+            background-color: #E1BF7F;
         }
 
         .bg-table-item {
-            background-color: #f7f7f7;
+            background-color: #F0DFBF;
+        }
+        .total-text {
+            font-size: 16px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 <table>
     <tr>
+        <td style="width: 400px;">
+            <img src="{{ public_path('/logo.jpg') }}" />
+        </td>
         <td>
             <div style="font-size: 13px;">{{ $varCompany->company_name }}</div>
             <div>{{ $varCompany->address }}, {{ $varCompany->postal_code }} {{ $varCompany->city }}</div>
@@ -58,17 +65,11 @@
 
 <table class="invoice-table">
     <tr>
-        <td style="text-align: center;"><h1>{{ __('messages.invoice_pdf_bill') }}</h1></td>
-    </tr>
-</table>
-
-<table class="invoice-table">
-    <tr>
         <td style="width: 400px;">
             <table>
                 <tr>
-                    <td class="bill-td">Број:</td>
-                    <td>{{ $invoice->getInvoiceNumberLabel($invoice) }}</td>
+                    <td class="bill-td"><h2>{{ __('messages.invoice_pdf_bill') }}</h2></td>
+                    <td><h2>{{ $invoice->getInvoiceNumberLabel($invoice) }}</h2></td>
                 </tr>
                 <tr>
                     <td class="bill-td">Место:</td>
@@ -85,41 +86,41 @@
             </table>
         </td>
         <td>
-            <div>{{ $invoice->getCustomerNameLabel($invoice) }}</div>
-            <div>{{ $invoice->getCustomerAddress($invoice) }}</div>
-            <div>{{ $invoice->getCustomerCity($invoice) }}</div>
-            <div>{{ __('messages.invoice_pdf_pib') }} {{ $invoice->getCustomerPIB($invoice)}}</div>
-            <div>{{ __('messages.invoice_pdf_mb') }} {{ $invoice->getCustomerMB($invoice) }}</div>
+            <div style="border: 2px solid #333333;padding: 10px;border-radius: 10px;">
+                <div>{{ $invoice->getCustomerNameLabel($invoice) }}</div>
+                <div>{{ $invoice->getCustomerAddress($invoice) }}</div>
+                <div>{{ $invoice->getCustomerCity($invoice) }}</div>
+                <div>{{ __('messages.invoice_pdf_pib') }} {{ $invoice->getCustomerPIB($invoice)}}</div>
+                <div>{{ __('messages.invoice_pdf_mb') }} {{ $invoice->getCustomerMB($invoice) }}</div>
+            </div>
         </td>
     </tr>
 </table>
 
 <table class="invoice-table">
     <tr class="bg-table-head">
-        <th class="table-item-td-padding">{{ __('messages.invoice_pdf_col_service') }}</th>
-        <th>{{ __('messages.invoice_pdf_col_service') }}</th>
+        <th class="table-item-td-padding" style="border-top-left-radius: 5px;">
+            {{ __('messages.invoice_pdf_col_service') }}
+        </th>
         <th>{{ __('messages.invoice_pdf_col_quantity') }}</th>
         <th>{{ __('messages.invoice_pdf_col_price') }}</th>
-        <th>{{ __('messages.invoice_pdf_col_discount') }}</th>
-        <th>{{ __('messages.invoice_pdf_col_currency') }}</th>
+        <th style="border-top-right-radius: 5px;">{{ __('messages.invoice_pdf_col_currency') }}</th>
     </tr>
     @foreach($invoice->items as $item)
         <tr class="bg-table-item">
             <td class="table-item-td-padding">{{ $item->getItemDescriptionLabel($item) }}</td>
-            <td class="table-item-td-padding"></td>
             <td class="table-item-td-padding text-center">{{ $item->getQuantityLabel($item) }}</td>
             <td class="table-item-td-padding text-right">{{ $item->getAmountLabel($item) }}</td>
-            <td class="table-item-td-padding"></td>
             <td class="table-item-td-padding text-right">{{ $item->getTotalLabel($item) }}</td>
         </tr>
     @endforeach
     <tr class="bg-table-item">
-        <th colspan="5" class="table-item-td-padding text-right">{{ __('messages.invoice_pdf_total') }}</th>
-        <td style="text-align: right;">{{ $invoice->getTotalLabel($invoice) }}</td>
-    </tr>
-    <tr>
-        <th colspan="5" class="table-item-td-padding text-right">{{ __('messages.invoice_pdf_for_payment') }}</th>
-        <th class="text-right">{{ $invoice->getTotalLabel($invoice) }}</th>
+        <th colspan="3" class="table-item-td-padding text-right">
+            {{ __('messages.invoice_pdf_total') }}
+        </th>
+        <td class="table-item-td-padding text-right total-text">
+            {{ $invoice->getTotalLabel($invoice) }}
+        </td>
     </tr>
 </table>
 
