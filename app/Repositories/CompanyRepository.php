@@ -14,7 +14,13 @@ final class CompanyRepository extends BaseRepository
 
     public function getCompanyData(): Company
     {
-        return Company::all()->first();
+        $company = Company::all()->first();
+
+        if (!$company) {
+            $company = $this->model;
+        }
+
+        return $company;
     }
 
     public function update(int|string $id, array $data): bool

@@ -37,6 +37,8 @@ Route::controller(CustomerController::class)->group(function () {
 });
 
 Route::controller(CompanyController::class)->group(function() {
+    Route::get('/company/create', 'create')->name('company-create');
+    Route::put('/company', 'store')->name('company-store');
     Route::get('/company', 'edit')->name('company-edit');
     Route::post('/company/{id}', 'update')->name('company-update');
 });

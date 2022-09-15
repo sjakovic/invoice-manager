@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('mb', 8);
             $table->string('address', 100);
             $table->string('city', 100);
-            $table->string('postal_code');
+            $table->string('postal_code', 10);
             $table->timestamps();
         });
     }
