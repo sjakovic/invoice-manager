@@ -5,6 +5,8 @@ return [
     'sidebar_dashboard' => 'Контролна табла',
     'sidebar_invoices' => 'Фактуре',
     'sidebar_customers' => 'Клијенти',
+    'sidebar_settings' => 'Подешавања',
+    'sidebar_company' => 'Фирма',
 
     'invoice_number' => 'Број фактуре',
     'invoice_date_of_traffic' => 'Датум рачуна',
@@ -71,4 +73,12 @@ return [
 
     'enum_PAID' => 'Плаћен',
     'enum_UNPAID' => 'Неплаћен',
+
+    'company_name' => 'Назив',
+    'company_pib' => 'ПИБ',
+    'company_mb' => 'МБ',
+    'company_address' => 'Адреса',
+    'company_city' => 'Град',
+    'company_postal_code' => 'Поштански број',
+    'company_account_number' => 'Број рачуна',
 ];

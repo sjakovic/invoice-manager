@@ -3,21 +3,36 @@
 namespace App\Repositories;
 
 
-use App\Enum\CacheKey;
 use App\Models\Company;
-use Illuminate\Support\Facades\Cache;
 
-final class CompanyRepository
+final class CompanyRepository extends BaseRepository
 {
+    public function __construct(Company $company)
+    {
+        parent::__construct($company);
+    }
+
     public function getCompanyData(): Company
     {
-        $data = Cache::get(CacheKey::COMPANY_DATA);
+        return Company::all()->first();
+    }
 
-        if (!$data) {
-            $data = Company::all()->first();
-            Cache::put(CacheKey::COMPANY_DATA, $data, now()->addHours(8));
+    public function update(int|string $id, array $data): bool
+    {
+        try {
+            /*** @var Company $company ** */
+            $company = $this->findById($id);
+            $company->company_name = $data['company_name'];
+            $company->pib = $data['pib'];
+            $company->mb = $data['mb'];
+            $company->address = $data['address'];
+            $company->city = $data['city'];
+            $company->postal_code = $data['postal_code'];
+            $company->account_number = $data['account_number'];
+            $company->save();
+            return true;
+        } catch (\Exception $e) {
+            return false;
         }
-
-        return $data;
     }
 }

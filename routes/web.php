@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CompanyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,3 +35,10 @@ Route::controller(CustomerController::class)->group(function () {
     Route::put('/customers', 'store')->name('customer-store');
     Route::post('/customers', 'update')->name('customer-update');
 });
+
+Route::controller(CompanyController::class)->group(function() {
+    Route::get('/company', 'edit')->name('company-edit');
+    Route::post('/company/{id}', 'update')->name('company-update');
+});
+
+

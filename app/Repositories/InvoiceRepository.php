@@ -129,7 +129,6 @@ final class InvoiceRepository extends BaseRepository
             });
             return true;
         } catch (\Exception $e) {
-            dd($e->getMessage());
             return false;
         }
     }
@@ -137,7 +136,6 @@ final class InvoiceRepository extends BaseRepository
     public function getInvoiceNextNumber(string $year): int
     {
         $number = Invoice::where('year', '=', $year)->max('number');
-
         return is_null($number) ? 1 : ++$number;
     }
 }

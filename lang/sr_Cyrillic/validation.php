@@ -163,5 +163,6 @@ return [
         'postal_code'           => 'Поштански број',
         'email'                 => 'Е-пошта',
         'phone'                 => 'Телефон',
+        'account_number'        => 'Број рачуна',
     ],
 ];

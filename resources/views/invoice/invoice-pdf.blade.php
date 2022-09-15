@@ -50,9 +50,6 @@
 <body>
 <table>
     <tr>
-        <td style="width: 400px;">
-            <img src="{{ public_path('/logo.jpg') }}" />
-        </td>
         <td>
             <div style="font-size: 13px;">{{ $varCompany->company_name }}</div>
             <div>{{ $varCompany->address }}, {{ $varCompany->postal_code }} {{ $varCompany->city }}</div>
@@ -65,7 +62,7 @@
 
 <table class="invoice-table">
     <tr>
-        <td style="width: 400px;">
+        <td style="width: 350px;">
             <table>
                 <tr>
                     <td class="bill-td"><h2>{{ __('messages.invoice_pdf_bill') }}</h2></td>
