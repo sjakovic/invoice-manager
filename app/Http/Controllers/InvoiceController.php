@@ -6,7 +6,6 @@ use App\Filters\InvoiceSearchFilter;
 use App\Helpers\DateTimeHelper;
 use App\Http\Requests\InvoiceStorePutRequest;
 use App\Http\Requests\InvoiceUpdatePostRequest;
-use App\Models\Invoice;
 use App\Repositories\CustomerRepository;
 use App\Repositories\InvoiceRepository;
 use Barryvdh\DomPDF\Facade\Pdf;

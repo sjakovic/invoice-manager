@@ -79,6 +79,13 @@ class Invoice extends Model
         'customer_city',
         'exchange_rate',
         'domestic',
+        'company_name',
+        'company_pib',
+        'company_mb',
+        'company_address',
+        'company_city',
+        'company_postal_code',
+        'company_invoice_text',
     ];
 
     public function items(): HasMany
