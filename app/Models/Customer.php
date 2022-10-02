@@ -36,6 +36,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Customer wherePostalCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Customer whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @method static \Database\Factories\CustomerFactory factory(...$parameters)
  */
 class Customer extends Model
 {

@@ -31,6 +31,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|InvoiceItem whereAmount($value)
  * @method static \Illuminate\Database\Eloquent\Builder|InvoiceItem whereQuantity($value)
  * @property-read \App\Models\Invoice $invoice
+ * @method static \Database\Factories\InvoiceItemFactory factory(...$parameters)
  */
 class InvoiceItem extends Model
 {

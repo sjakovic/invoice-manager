@@ -32,6 +32,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Company whereUpdatedAt($value)
  * @property string|null $account_number
  * @method static \Illuminate\Database\Eloquent\Builder|Company whereAccountNumber($value)
+ * @method static \Database\Factories\CompanyFactory factory(...$parameters)
  */
 class Company extends Model
 {

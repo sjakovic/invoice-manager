@@ -56,6 +56,23 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $domestic
  * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereDomestic($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereExchangeRate($value)
+ * @property string $tax
+ * @property string $company_name
+ * @property string $company_pib
+ * @property string $company_mb
+ * @property string $company_address
+ * @property string $company_city
+ * @property string $company_postal_code
+ * @property string $company_invoice_text
+ * @method static \Database\Factories\InvoiceFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereCompanyAddress($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereCompanyCity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereCompanyInvoiceText($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereCompanyMb($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereCompanyName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereCompanyPib($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereCompanyPostalCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereTax($value)
  */
 class Invoice extends Model
 {

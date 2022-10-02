@@ -9,12 +9,14 @@ use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 final class InvoiceRepository extends BaseRepository
 {
     public function __construct(
         protected Invoice          $invoice,
         private CustomerRepository $customerRepository,
+        private CompanyRepository  $companyRepository,
     )
     {
         parent::__construct($this->invoice);
@@ -59,38 +61,48 @@ final class InvoiceRepository extends BaseRepository
     public function create(array $data): Invoice|bool
     {
         try {
-            $this->model = new Invoice();
-            DB::transaction(function () use ($data) {
+            $invoice = new Invoice();
+
+            DB::transaction(function () use ($data, $invoice) {
                 $customer = $this->customerRepository->find($data['customer_id']);
+                $company = $this->companyRepository->getCompanyData();
 
-                $this->model->year = (int)$data['year'];
-                $this->model->number = (int)$data['number'];
-                $this->model->number_mark = (string)$data['number_mark'];
-                $this->model->date_of_traffic = (string)$data['date_of_traffic'];
-                $this->model->payment_deadline = (string)$data['payment_deadline'];
-                $this->model->payment_status = InvoiceStatus::UNPAID;
-                $this->model->domestic = (bool)@$data['domestic'];
-                $this->model->exchange_rate = NumberHelper::dbDecimalFormat($data['exchange_rate']);
-                $this->model->customer_id = (int)$data['customer_id'];
-                $this->model->total = array_sum(array_column($data['items'], 'amount'));
-                $this->model->customer_name = $customer->company_name;
-                $this->model->customer_pib = $customer->pib;
-                $this->model->customer_mb = $customer->mb;
-                $this->model->customer_address = $customer->address;
-                $this->model->customer_city = $customer->city;
-                $this->model->save();
+                $invoice->year = (int)$data['year'];
+                $invoice->number = (int)$data['number'];
+                $invoice->number_mark = (string)$data['number_mark'];
+                $invoice->date_of_traffic = (string)$data['date_of_traffic'];
+                $invoice->payment_deadline = (string)$data['payment_deadline'];
+                $invoice->payment_status = InvoiceStatus::UNPAID;
+                $invoice->domestic = (bool)@$data['domestic'];
+                $invoice->exchange_rate = NumberHelper::dbDecimalFormat($data['exchange_rate']);
+                $invoice->customer_id = (int)$data['customer_id'];
+                $invoice->total = array_sum(array_column($data['items'], 'amount'));
+                $invoice->customer_name = $customer->company_name;
+                $invoice->customer_pib = $customer->pib;
+                $invoice->customer_mb = $customer->mb;
+                $invoice->customer_address = $customer->address;
+                $invoice->customer_city = $customer->city;
+                $invoice->company_name = $company->company_name;
+                $invoice->company_pib = $company->pib;
+                $invoice->company_mb = $company->mb;
+                $invoice->company_address = $company->address;
+                $invoice->company_city = $company->city;
+                $invoice->company_postal_code = $company->postal_code;
+                $invoice->company_invoice_text = '';
+                $invoice->save();
 
-                array_walk($data['items'], function ($item) {
+                array_walk($data['items'], function ($item) use ($invoice) {
                     $invoiceItem = new InvoiceItem();
-                    $invoiceItem->invoice_id = $this->model->id;
+                    $invoiceItem->invoice_id = $invoice->id;
                     $invoiceItem->quantity = (int)$item['quantity'];
                     $invoiceItem->item_description = (string)$item['desc'];
                     $invoiceItem->amount = (float)$item['amount'];
                     $invoiceItem->save();
                 });
             });
-            return $this->model;
+            return $invoice;
         } catch (\Exception $e) {
+            Log::error($e->getMessage());
             return false;
         }
     }

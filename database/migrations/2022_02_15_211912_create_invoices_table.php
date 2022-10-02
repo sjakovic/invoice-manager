@@ -22,6 +22,7 @@ return new class extends Migration {
             $table->date('date_of_traffic');
             $table->date('payment_deadline');
             $table->decimal('total', 12, 2);
+            $table->decimal('tax', 2, 2)->default(0);
             $table->boolean('domestic')->default(true);
             $table->decimal('exchange_rate', 8, 2)->nullable();
             $table->tinyInteger('payment_status')->default(InvoiceStatus::UNPAID);
