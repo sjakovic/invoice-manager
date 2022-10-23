@@ -45,15 +45,20 @@
     <div class="table-responsive">
         <table class="table table-striped table-sm">
             <thead>
-            <tr>
-                <th scope="col" class="text-center">#</th>
-                <th scope="col" class="text-center">{{ __('messages.invoice_number') }}</th>
-                <th scope="col" class="text-center">{{ __('messages.invoice_date_of_traffic') }}</th>
-                <th scope="col" class="text-center">{{ __('messages.invoice_customer') }}</th>
-                <th scope="col" class="text-center">{{ __('messages.invoice_total') }}</th>
-                <th scope="col" class="text-center">{{ __('messages.invoice_payment_status') }}</th>
-                <th scope="col" class="text-center">&nbsp;</th>
-            </tr>
+                <tr class="bg-warning">
+                    <td class="text-end" colspan="7">
+                        {!! __('messages.invoice_traffic_12_months', compact('currentDate', 'trafficAmount')) !!}
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col" class="text-center">#</th>
+                    <th scope="col" class="text-center">{{ __('messages.invoice_number') }}</th>
+                    <th scope="col" class="text-center">{{ __('messages.invoice_date_of_traffic') }}</th>
+                    <th scope="col" class="text-center">{{ __('messages.invoice_customer') }}</th>
+                    <th scope="col" class="text-center">{{ __('messages.invoice_total') }}</th>
+                    <th scope="col" class="text-center">{{ __('messages.invoice_payment_status') }}</th>
+                    <th scope="col" class="text-center">&nbsp;</th>
+                </tr>
             </thead>
             <tbody>
             @foreach($records as $record)

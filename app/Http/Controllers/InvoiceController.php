@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Filters\InvoiceSearchFilter;
 use App\Helpers\DateTimeHelper;
+use App\Helpers\NumberHelper;
 use App\Http\Requests\InvoiceStorePutRequest;
 use App\Http\Requests\InvoiceUpdatePostRequest;
 use App\Repositories\CustomerRepository;
@@ -29,9 +30,19 @@ class InvoiceController extends Controller
 
         $records = $this->invoiceRepository->table($filter);
 
+        $currentDate = date('Y-m-d');
+
         return view('invoice.index', [
             'filter' => $filter,
             'records' => $records,
+            'currentDate' => sprintf(
+                '<span class="fw-bold">%s</span>',
+                DateTimeHelper::webDateFormat($currentDate)
+            ),
+            'trafficAmount' => sprintf(
+                '<span class="fw-bold">%s</span>',
+                NumberHelper::webFormatFloat($this->invoiceRepository->getTrafficLast12Months($currentDate))
+            ),
         ]);
     }
 

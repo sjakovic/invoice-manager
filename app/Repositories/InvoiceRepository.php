@@ -150,4 +150,12 @@ final class InvoiceRepository extends BaseRepository
         $number = Invoice::where('year', '=', $year)->max('number');
         return is_null($number) ? 1 : ++$number;
     }
+
+    public function getTrafficLast12Months(string $date): float
+    {
+        $dateFrom = date('Y-m-d 00:00:00', strtotime($date . ' -12 months'));
+        $dateTo = date('Y-m-d 23:59:59', strtotime($date));
+
+        return Invoice::whereBetween('date_of_traffic', [$dateFrom, $dateTo])->sum('total');
+    }
 }

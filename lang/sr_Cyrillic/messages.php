@@ -25,6 +25,7 @@ return [
     'invoice_item_amount' => 'Износ',
     'invoice_item_total' => 'Укупно:',
     'invoice_item_btn_add' => 'Додај ставку',
+    'invoice_traffic_12_months' => 'Датум: :currentDate - Промет уназад 12 месеци: :trafficAmount',
 
     'invoice_pdf_number' => 'Број',
     'invoice_pdf_pib' => 'ПИБ:',
