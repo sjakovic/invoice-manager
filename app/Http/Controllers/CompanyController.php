@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CompanyUpdatePostRequest;
 use App\Repositories\CompanyRepository;
+use Illuminate\Http\Response;
 
 class CompanyController extends Controller
 {
@@ -36,6 +37,10 @@ class CompanyController extends Controller
     public function update(CompanyUpdatePostRequest $request, string|int $id)
     {
         if ($this->companyRepository->update($id, $request->all())) {
+            $logo = $request->file('company_logo');
+            if ($logo && strtolower($logo->extension() === 'png')) {
+                $logo->move(storage_path('app/logo'), $id . '.png');
+            }
             return redirect()->back()->with('success', __('messages.data_saved'));
         } else {
             return redirect()->back()->with('error', __('messages.data_error'));

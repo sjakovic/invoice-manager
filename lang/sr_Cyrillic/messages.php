@@ -59,6 +59,7 @@ return [
     'page_title_invoice_edit' => 'Измена фактуре',
     'page_title_customers' => 'Клијенти',
     'page_title_customer_add' => 'Нови клијент',
+    'page_title_company_edit' => 'Подаци о фирми',
 
     'col_action' => 'Акција',
 
@@ -82,4 +83,5 @@ return [
     'company_city' => 'Град',
     'company_postal_code' => 'Поштански број',
     'company_account_number' => 'Број рачуна',
+    'company_logo' => 'Логотип',
 ];

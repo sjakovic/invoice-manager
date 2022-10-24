@@ -5,13 +5,14 @@
 @section('content')
     <div
         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">{{ __('messages.page_title_invoice_edit') }}</h1>
+        <h1 class="h2">{{ __('messages.page_title_company_edit') }}</h1>
     </div>
     @include('components.alert.errors')
     <div class="row">
         <div class="col-6 col-xs-12">
             <form method="POST"
                   action="{{ route('company-update', ['id' => $company->id], false) }}"
+                  enctype="multipart/form-data"
                   class="form" id="company_edit_form">
                 @csrf
                 <div class="row mb-1">
@@ -91,6 +92,17 @@
                                name="account_number"
                                class="form-control form-control-sm col-sm-2"
                                value="{{ old('account_number', $company->account_number) }}">
+                    </div>
+                </div>
+
+                <div class="row mb-1">
+                    <label class="col-sm-3 col-form-label text-end">
+                        {{ __('messages.company_logo') }}
+                    </label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="file"
+                               name="company_logo"
+                               class="form-control form-control-sm col-sm-2">
                     </div>
                 </div>
 
