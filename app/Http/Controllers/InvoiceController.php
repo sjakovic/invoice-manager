@@ -10,6 +10,7 @@ use App\Http\Requests\InvoiceUpdatePostRequest;
 use App\Repositories\CustomerRepository;
 use App\Repositories\InvoiceRepository;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
 {
@@ -130,8 +131,11 @@ class InvoiceController extends Controller
     public function pdf($id)
     {
         $invoice = $this->invoiceRepository->find($id);
+        $logo = file_exists((storage_path('app/logo/1.png')))
+            ? sprintf('<img src="%s" width="200" height="auto" />', storage_path('app/logo/1.png'))
+            : '';
 
-        $pdf = Pdf::loadView('invoice.invoice-pdf', compact('invoice'));
+        $pdf = Pdf::loadView('invoice.invoice-pdf', compact('invoice', 'logo'));
 
         return $pdf->stream('invoice.pdf');
     }

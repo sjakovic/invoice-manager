@@ -50,6 +50,11 @@
 <body>
 <table>
     <tr>
+        @if($logo)
+        <td style="width: 350px;vertical-align: top;">
+             {!! $logo !!}
+        </td>
+        @endif
         <td>
             <div style="font-size: 13px;">{{ $varCompany->company_name }}</div>
             <div>{{ $varCompany->address }}, {{ $varCompany->postal_code }} {{ $varCompany->city }}</div>
