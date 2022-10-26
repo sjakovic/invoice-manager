@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Enum\Finance;
 use App\Filters\InvoiceSearchFilter;
 use App\Helpers\DateTimeHelper;
+use App\Helpers\FinanceHelper;
 use App\Helpers\NumberHelper;
 use App\Http\Requests\InvoiceStorePutRequest;
 use App\Http\Requests\InvoiceUpdatePostRequest;
 use App\Repositories\CustomerRepository;
 use App\Repositories\InvoiceRepository;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
 {
@@ -43,6 +44,12 @@ class InvoiceController extends Controller
             'trafficAmount' => sprintf(
                 '<span class="fw-bold">%s</span>',
                 NumberHelper::webFormatFloat($this->invoiceRepository->getTrafficLast12Months($currentDate))
+            ),
+            'taxAmount' => sprintf(
+                '<span class="fw-bold">%s</span>',
+                NumberHelper::webFormatFloat(
+                    FinanceHelper::calculateMaxTax($records->sum('total'), Finance::TAX)
+                )
             ),
         ]);
     }

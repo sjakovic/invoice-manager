@@ -50,6 +50,11 @@
                         {!! __('messages.invoice_traffic_12_months', compact('currentDate', 'trafficAmount')) !!}
                     </td>
                 </tr>
+                <tr class="bg-info bg-gradient">
+                    <td class="text-end" colspan="7">
+                        {!! __('messages.invoice_max_tax', compact('taxAmount')) !!}
+                    </td>
+                </tr>
                 <tr>
                     <th scope="col" class="text-center">#</th>
                     <th scope="col" class="text-center">{{ __('messages.invoice_number') }}</th>
