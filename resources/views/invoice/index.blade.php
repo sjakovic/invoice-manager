@@ -72,13 +72,21 @@
                     <td class="text-center align-middle">{{ $record->getInvoiceNumberLabel($record) }}</td>
                     <td class="text-center align-middle">{{ $record->getDateOfTrafficLabel($record) }}</td>
                     <td class="text-start align-middle">{{ $record->getCustomerNameLabel($record) }}</td>
-                    <td class="text-end align-middle">{{ $record->getTotalLabel($record) }}</td>
+                    <td class="text-end align-middle">
+                        {{ $record->getTotalLabel($record->total, true) }}
+                    </td>
                     <td class="text-center align-middle">{!! $record->getStatusLabel($record) !!}</td>
                     <td class="fit-cell-width">
-                        <a href="{{ route('invoice-pdf', ['id' => $record->id], false) }}"
+                        <a href="{{ route('invoice-pdf', ['id' => $record->id, 'domestic' => 1], false) }}"
                            class="btn btn-sm btn-danger"
                            target="_blank">{{ __('messages.btn_pdf') }}
                         </a>
+                        @if($record->isFalse($record->domestic))
+                        <a href="{{ route('invoice-pdf', ['id' => $record->id], false) }}"
+                           class="btn btn-sm btn-outline-danger"
+                           target="_blank">{!! __('messages.btn_pdf_en') !!}
+                        </a>
+                        @endif
                         <a href="{{ route('invoice-edit', ['id' => $record->id], false) }}"
                            class="btn btn-sm btn-warning">
                             {{ __('messages.btn_edit') }}

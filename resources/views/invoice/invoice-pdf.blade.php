@@ -74,15 +74,15 @@
                     <td><h2>{{ $invoice->getInvoiceNumberLabel($invoice) }}</h2></td>
                 </tr>
                 <tr>
-                    <td class="bill-td">Место:</td>
-                    <td>Београд</td>
+                    <td class="bill-td">{{ __('messages.invoice_pdf_place') }}:</td>
+                    <td>{{ __('messages.invoice_pdf_city') }}</td>
                 </tr>
                 <tr>
-                    <td class="bill-td">Датум рачуна:</td>
+                    <td class="bill-td">{{ __('messages.invoice_pdf_date_of_traffic') }}:</td>
                     <td>{{ $invoice->getDateOfTrafficLabel($invoice) }}</td>
                 </tr>
                 <tr>
-                    <td class="bill-td">Доспеће:</td>
+                    <td class="bill-td">{{ __('messages.invoice_pdf_payment_deadline') }}:</td>
                     <td>{{ $invoice->getPaymentDeadline($invoice) }}</td>
                 </tr>
             </table>
@@ -92,8 +92,10 @@
                 <div>{{ $invoice->getCustomerNameLabel($invoice) }}</div>
                 <div>{{ $invoice->getCustomerAddress($invoice) }}</div>
                 <div>{{ $invoice->getCustomerCity($invoice) }}</div>
+                @if($invoice->isTrue($invoice->domestic))
                 <div>{{ __('messages.invoice_pdf_pib') }} {{ $invoice->getCustomerPIB($invoice)}}</div>
                 <div>{{ __('messages.invoice_pdf_mb') }} {{ $invoice->getCustomerMB($invoice) }}</div>
+                @endif
             </div>
         </td>
     </tr>
@@ -112,8 +114,12 @@
         <tr class="bg-table-item">
             <td class="table-item-td-padding">{{ $item->getItemDescriptionLabel($item) }}</td>
             <td class="table-item-td-padding text-center">{{ $item->getQuantityLabel($item) }}</td>
-            <td class="table-item-td-padding text-right">{{ $item->getAmountLabel($item) }}</td>
-            <td class="table-item-td-padding text-right">{{ $item->getTotalLabel($item) }}</td>
+            <td class="table-item-td-padding text-right">
+                {{ $item->getAmountLabel($item, $invoice->domestic, $invoice->exchange_rate) }}
+            </td>
+            <td class="table-item-td-padding text-right">
+                {{ $item->getTotalLabel($item, $invoice->domestic, $invoice->exchange_rate) }}
+            </td>
         </tr>
     @endforeach
     <tr class="bg-table-item">
@@ -121,7 +127,7 @@
             {{ __('messages.invoice_pdf_total') }}
         </th>
         <td class="table-item-td-padding text-right total-text">
-            {{ $invoice->getTotalLabel($invoice) }}
+            {{ $invoice->getTotalLabel($invoice->total, $invoice->domestic, $invoice->exchange_rate) }}
         </td>
     </tr>
 </table>
@@ -130,6 +136,17 @@
     <tr>
         <td>{!! __('messages.invoice_pdf_info') !!}</td>
     </tr>
+    @if($invoice->isFalse($invoice->domestic))
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td><h2>{{ __('messages.invoice_pdf_payment_instructions') }}</h2></td>
+    </tr>
+    <tr>
+        <td>{!! $invoice->payment_instructions !!}</td>
+    </tr>
+    @endif
 </table>
 </body>
 </html>

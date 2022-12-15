@@ -43,6 +43,7 @@ trait InvoiceLabel
     {
         return $invoice->customer_address;
     }
+
     public function getCustomerPIB(Invoice $invoice): string
     {
         return $invoice->customer_pib;
@@ -58,9 +59,11 @@ trait InvoiceLabel
         return $invoice->customer_city;
     }
 
-    public function getTotalLabel(Invoice $invoice): string
+    public function getTotalLabel(float $amount, bool $domestic = true, float $exchangeRate = null): string
     {
-        return NumberHelper::webFormatFloat($invoice->total);
+        return $domestic
+            ? NumberHelper::webFormatFloat($amount)
+            : NumberHelper::webFormatFloat($amount / $exchangeRate);
     }
 
 }

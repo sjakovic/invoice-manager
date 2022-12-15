@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\BooleanHelper;
 use App\Traits\InvoiceLabel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -73,10 +74,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereCompanyPib($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereCompanyPostalCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereTax($value)
+ * @property string|null $payment_instructions
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice wherePaymentInstructions($value)
  */
 class Invoice extends Model
 {
-    use HasFactory, InvoiceLabel;
+    use HasFactory, InvoiceLabel, BooleanHelper;
 
     protected $fillable = [
         'customer_id',
@@ -103,6 +106,7 @@ class Invoice extends Model
         'company_city',
         'company_postal_code',
         'company_invoice_text',
+        'payment_instructions',
     ];
 
     public function items(): HasMany

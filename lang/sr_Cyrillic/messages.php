@@ -27,6 +27,8 @@ return [
     'invoice_item_btn_add' => 'Додај ставку',
     'invoice_traffic_12_months' => 'Датум: :currentDate - Промет уназад 12 месеци: :trafficAmount',
     'invoice_max_tax' => 'Максимални порез: :taxAmount',
+    'invoice_pdf_place' => 'Место',
+    'invoice_pdf_city' => 'Београд',
 
     'invoice_pdf_number' => 'Број',
     'invoice_pdf_pib' => 'ПИБ:',
@@ -70,6 +72,7 @@ return [
     'btn_save' => 'Сачувај',
     'btn_delete' => 'Обриши',
     'btn_pdf' => 'ПДФ',
+    'btn_pdf_en' => 'ПДФ<sup>енг</sup>',
 
     'data_saved' => 'Подаци су сачувани.',
     'data_error' => 'Дошло је до грешке. Покушајте поново.',
