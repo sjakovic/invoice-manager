@@ -41,6 +41,7 @@
         .bg-table-item {
             background-color: #F0DFBF;
         }
+
         .total-text {
             font-size: 16px;
             font-weight: bold;
@@ -51,16 +52,16 @@
 <table>
     <tr>
         @if($logo)
-        <td style="width: 350px;vertical-align: top;">
-             {!! $logo !!}
-        </td>
+            <td style="width: 350px;vertical-align: top;">
+                {!! $logo !!}
+            </td>
         @endif
         <td>
             <div style="font-size: 13px;">{{ $invoice->company_name }}</div>
-            <div>{{ $invoice->address }}, {{ $invoice->postal_code }} {{ $invoice->city }}</div>
-            <div>{{ __('messages.invoice_pdf_pib') }} {{ $invoice->pib }}</div>
-            <div>{{ __('messages.invoice_pdf_mb') }} {{ $invoice->mb }}</div>
-            <div>{{ __('messages.invoice_pdf_account_number') }} {{ $invoice->account_number }}</div>
+            <div>{{ $invoice->company_address }}, {{ $invoice->company_postal_code }} {{ $invoice->company_city }}</div>
+            <div>{{ __('messages.invoice_pdf_pib') }} {{ $invoice->company_pib }}</div>
+            <div>{{ __('messages.invoice_pdf_mb') }} {{ $invoice->company_mb }}</div>
+            <div>{{ __('messages.invoice_pdf_account_number') }} {{ $varCompany->account_number }}</div>
         </td>
     </tr>
 </table>
@@ -93,8 +94,10 @@
                 <div>{{ $invoice->getCustomerAddress($invoice) }}</div>
                 <div>{{ $invoice->getCustomerCity($invoice) }}</div>
                 @if($invoice->isTrue($invoice->domestic))
-                <div>{{ __('messages.invoice_pdf_pib') }} {{ $invoice->getCustomerPIB($invoice)}}</div>
-                <div>{{ __('messages.invoice_pdf_mb') }} {{ $invoice->getCustomerMB($invoice) }}</div>
+                    <div>{{ __('messages.invoice_pdf_pib') }} {{ $invoice->getCustomerPIB($invoice)}}</div>
+                    <div>{{ __('messages.invoice_pdf_mb') }} {{ $invoice->getCustomerMB($invoice) }}</div>
+                @else
+                    <div>{{ $invoice->getCustomerMB($invoice) }}</div>
                 @endif
             </div>
         </td>
@@ -137,15 +140,15 @@
         <td>{!! __('messages.invoice_pdf_info') !!}</td>
     </tr>
     @if($invoice->isFalse($invoice->domestic))
-    <tr>
-        <td>&nbsp;</td>
-    </tr>
-    <tr>
-        <td><h2>{{ __('messages.invoice_pdf_payment_instructions') }}</h2></td>
-    </tr>
-    <tr>
-        <td>{!! $invoice->payment_instructions !!}</td>
-    </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td><h2>{{ __('messages.invoice_pdf_payment_instructions') }}</h2></td>
+        </tr>
+        <tr>
+            <td>{!! $invoice->payment_instructions !!}</td>
+        </tr>
     @endif
 </table>
 </body>
