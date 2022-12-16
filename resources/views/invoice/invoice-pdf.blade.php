@@ -56,11 +56,11 @@
         </td>
         @endif
         <td>
-            <div style="font-size: 13px;">{{ $varCompany->company_name }}</div>
-            <div>{{ $varCompany->address }}, {{ $varCompany->postal_code }} {{ $varCompany->city }}</div>
-            <div>{{ __('messages.invoice_pdf_pib') }} {{ $varCompany->pib }}</div>
-            <div>{{ __('messages.invoice_pdf_mb') }} {{ $varCompany->mb }}</div>
-            <div>{{ __('messages.invoice_pdf_account_number') }} {{ $varCompany->account_number }}</div>
+            <div style="font-size: 13px;">{{ $invoice->company_name }}</div>
+            <div>{{ $invoice->address }}, {{ $invoice->postal_code }} {{ $invoice->city }}</div>
+            <div>{{ __('messages.invoice_pdf_pib') }} {{ $invoice->pib }}</div>
+            <div>{{ __('messages.invoice_pdf_mb') }} {{ $invoice->mb }}</div>
+            <div>{{ __('messages.invoice_pdf_account_number') }} {{ $invoice->account_number }}</div>
         </td>
     </tr>
 </table>
