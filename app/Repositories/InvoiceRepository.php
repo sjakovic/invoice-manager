@@ -8,6 +8,7 @@ use App\Helpers\NumberHelper;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Notifications\Action;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -159,5 +160,14 @@ final class InvoiceRepository extends BaseRepository
         return Invoice::whereBetween('date_of_traffic', [$dateFrom, $dateTo])
             ->where('domestic', true)
             ->sum('total');
+    }
+
+    public function getYears(): array
+    {
+        return Invoice::select('year')
+            ->groupBy('year')
+            ->pluck('year')
+            ->sortDesc()
+            ->toArray();
     }
 }

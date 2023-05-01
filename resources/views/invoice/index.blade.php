@@ -11,14 +11,14 @@
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group me-2">
-                    @foreach(range(date('Y-m-d'), 2017) as $item)
+                    @foreach($years as $year)
                         <input type="radio"
                                class="btn-check"
                                name="filter_year"
-                               id="filter_year_{{ $item }}"
-                               value="{{ $item }}"
-                               @if($item == $filter->year) checked @endif >
-                        <label class="btn btn-outline-info" for="filter_year_{{ $item }}">{{ $item }}</label>
+                               id="filter_year_{{ $year }}"
+                               value="{{ $year }}"
+                               @if($year == $filter->year) checked @endif >
+                        <label class="btn btn-outline-info" for="filter_year_{{ $year }}">{{ $year }}</label>
                     @endforeach
                 </div>
             </div>

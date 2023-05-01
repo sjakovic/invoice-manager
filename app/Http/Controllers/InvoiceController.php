@@ -38,6 +38,7 @@ class InvoiceController extends Controller
         return view('invoice.index', [
             'filter' => $filter,
             'records' => $records,
+            'years' => $this->invoiceRepository->getYears(),
             'currentDate' => sprintf(
                 '<span class="fw-bold">%s</span>',
                 DateTimeHelper::webDateFormat($currentDate)
